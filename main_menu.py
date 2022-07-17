@@ -1,6 +1,7 @@
 from cube_steps_3D.main import *
 from cube_steps_3D.play_3d_cube import *
 
+
 # Class of game menu
 class MenuMenu(Entity):
     def __init__(self, **kwargs):
@@ -8,7 +9,7 @@ class MenuMenu(Entity):
         window.fullscreen = True
 
         # Create empty entities that will be parents of our menus content
-        self.main_menu = Entity(parent=self, enabled=True, position=(0, -0.25), color=color.blue, )
+        self.main_menu = Entity(parent=self, enabled=True, position=(0, -0.25), color=color.blue)
         self.options_menu = Entity(parent=self, enabled=False, position=(0, -0.25), color=color.blue)
         self.help_menu = Entity(parent=self, enabled=False, position=(0, -0.25), color=color.blue)
 
@@ -93,6 +94,7 @@ class MenuMenu(Entity):
         self.main_menu.disable()
         self.background.disable()
         game = Game3D()
+
 
 if __name__ == "__main__":
     # Init application
