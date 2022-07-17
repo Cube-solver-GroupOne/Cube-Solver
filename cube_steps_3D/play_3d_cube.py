@@ -1,5 +1,5 @@
 from ursina import *
-
+from main_menu import *
 
 class Game3D:
     def __init__(self):
@@ -50,6 +50,10 @@ class Game3D:
         t = Button(icon='models/8i7FQ(6)', color=color.black, scale_x=.15, scale_y=0.22)
         t.world_position = (10, -7, -15)
         t.on_click = self.T_move
+
+        bb = Button(icon= "", color=color.black, scale_x=.15, scale_y=0.22)
+        bb.world_position = (14, -7, -15)
+        bb.on_click = self.bbbb
 
     def U_move(self):
         self.rotate_side('TOP')
@@ -125,6 +129,9 @@ class Game3D:
         self.RIGHT = {Vec3(1, y, z) for y in range(-1, 2) for z in range(-1, 2)}
         self.TOP = {Vec3(x, 1, z) for x in range(-1, 2) for z in range(-1, 2)}
         self.SIDE_POSITIONS = self.LEFT | self.BOTTOM | self.FACE | self.BACK | self.RIGHT | self.TOP
+
+    def bbbb(self):
+        main_menu = MenuMenu()
 
 
 

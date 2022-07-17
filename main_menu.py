@@ -1,6 +1,6 @@
 from cube_steps_3D.main import *
 from cube_steps_3D.play_3d_cube import *
-
+from cube_steps_3D.color_detect import *
 
 # Class of game menu
 class MenuMenu(Entity):
@@ -9,7 +9,7 @@ class MenuMenu(Entity):
         window.fullscreen = True
 
         # Create empty entities that will be parents of our menus content
-        self.main_menu = Entity(parent=self, enabled=True, position=(0, -0.25), color=color.blue)
+        self.main_menu = Entity(parent=self, enabled=True, position=(0, -0.25), color=color.blue, )
         self.options_menu = Entity(parent=self, enabled=False, position=(0, -0.25), color=color.blue)
         self.help_menu = Entity(parent=self, enabled=False, position=(0, -0.25), color=color.blue)
 
@@ -27,11 +27,14 @@ class MenuMenu(Entity):
         # Button list
         ButtonList(button_dict={
             "Start": Func(self.buld_3D_play),
-            "Solver": Func(self.buld_3D_steps),
+            "Solver": Func(self.dedectoin),
             "Options": Func(lambda: switch(self.options_menu, self.main_menu)),
-            "Help": Func(lambda: switch(self.help_menu, self.main_menu)),
+            "Help": Func(lambda: Text("""This game is a smart Rubik's Cube game 
+If you want tp play and solve 3D cube click on START
+If you want to use our BOT to solve a real cube for you click on SOLVER
+              """,origin=(0,0), position=(-0.15, 0.23))),
             "Exit": Func(lambda: application.quit())
-        }, text_alagin="center", color=color.blue, y=0, parent=self.main_menu)
+        }, color=color.blue, y=0, parent=self.main_menu,text_size=5)
         # [MAIN MENU] WINDOW END
 
         # [OPTIONS MENU] WINDOW START
@@ -50,13 +53,13 @@ class MenuMenu(Entity):
         Text("HELP MENU", parent=self.help_menu, y=0.4, x=0, origin=(0, 0), position=(0, 0.05))
 
         # Button list
-        ButtonList(button_dict={
-            "Gameplay": Func(print_on_screen, "You clicked on Gameplay help button!", position=(0, -.16),
-                             origin=(0, 0)),
-            "Battle": Func(print_on_screen, "You clicked on Battle help button!", position=(0, -.16), origin=(0, 0)),
-            "Control": Func(print_on_screen, "You clicked on Control help button!", position=(0, -.16), origin=(0, 0)),
-            "Back": Func(lambda: switch(self.main_menu, self.help_menu))
-        }, color=color.blue, y=0, parent=self.help_menu)
+        # ButtonList(button_dict={
+        #     "Gameplay": Func(print_on_screen, "You clicked on Gameplay help button!", position=(0, -.16),
+        #                      origin=(0, 0)),
+        #     "Battle": Func(print_on_screen, "You clicked on Battle help button!", position=(0, -.16), origin=(0, 0)),
+        #     "Control": Func(print_on_screen, "You clicked on Control help button!", position=(0, -.16), origin=(0, 0)),
+        #     "Back": Func(lambda: switch(self.main_menu, self.help_menu))
+        # }, color=color.blue, y=0, parent=self.help_menu)
         # [HELP MENU] WINDOW END
 
         # Here we can change attributes of this class when call this class
@@ -94,7 +97,6 @@ class MenuMenu(Entity):
         self.main_menu.disable()
         self.background.disable()
         game = Game3D()
-
 
 if __name__ == "__main__":
     # Init application
