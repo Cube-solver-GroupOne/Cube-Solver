@@ -207,5 +207,6 @@ class CaptureCube:
 
 
 if __name__ == '__main__':
+
     cube = CaptureCube()
     cube.capture_cube()
