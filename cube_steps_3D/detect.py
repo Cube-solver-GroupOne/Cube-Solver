@@ -1,4 +1,4 @@
-
+# this is our first take on the detect system.
 import numpy as np
 import cv2
 

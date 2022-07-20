@@ -1,3 +1,6 @@
+# terminal input method just in case .
+
+
 print("Hi to our cube solver, please follow the input method." )
 print("""Notice that the colors for each side should inputed as
 red --> r

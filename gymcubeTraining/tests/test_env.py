@@ -1,5 +1,4 @@
 import unittest
-
 import numpy as np
 from gymcube.envs.RubiksCubeEnv import RubiksCubeEnv
 from gymcube.wrappers import GetChildren, LegalMoves

@@ -1,6 +1,7 @@
 from cube_steps_3D.main import *
 from cube_steps_3D.play_3d_cube import *
 from cube_steps_3D.color_detect import *
+
 # Class of game menu
 class MenuMenu(Entity):
     def __init__(self, **kwargs):
@@ -31,7 +32,7 @@ to use our BOT to solve a real cube for you click on SOLVER
         }, text_alagin="center", color=color.blue, y=0, parent=self.main_menu)
         # [MAIN MENU] WINDOW END
 
-        # [OPTIONS MENU] WINDOW START
+        # [OPTIONS MENU] WINDOW START (adding some features as resolution and sound options as stretch goal)
         # Title of our menu
         Text("OPTIONS MENU", parent=self.options_menu, y=0.4, x=0, origin=(0, 0), position=(0, 0.05))
         # Button
@@ -39,23 +40,15 @@ to use our BOT to solve a real cube for you click on SOLVER
                position=(0, -0.1),
                on_click=lambda: switch(self.main_menu, self.options_menu))
         # [OPTIONS MENU] WINDOW END
+
         # [HELP MENU] WINDOW START
         # Title of our menu
         Text("HELP MENU", parent=self.help_menu, y=0.4, x=0, origin=(0, 0), position=(0, 0.05))
 
-        # Button list
-        # ButtonList(button_dict={
-        #     "Gameplay": Func(print_on_screen, "You clicked on Gameplay help button!", position=(0, -.16),
-        #                      origin=(0, 0)),
-        #     "Battle": Func(print_on_screen, "You clicked on Battle help button!", position=(0, -.16), origin=(0, 0)),
-        #     "Control": Func(print_on_screen, "You clicked on Control help button!", position=(0, -.16), origin=(0, 0)),
-        #     "Back": Func(lambda: switch(self.main_menu, self.help_menu))
-        # }, color=color.blue, y=0, parent=self.help_menu)
-        # [HELP MENU] WINDOW END
-
         # Here we can change attributes of this class when call this class
         for key, value in kwargs.items():
             setattr(self, key, value)
+
     # Input function that check if key pressed on keyboard
     def input(self, key):
         # And if you want use same keys on different windows
