@@ -5,7 +5,7 @@ from cube_steps_3D.color_detect import *
 class MenuMenu(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=camera.ui, ignore_paused=True)
-        window.fullscreen = True
+        # window.fullscreen = True
         # Create empty entities that will be parents of our menus content
         self.main_menu = Entity(parent=self, enabled=True, position=(0, -0.25), color=color.blue, )
         self.options_menu = Entity(parent=self, enabled=False, position=(0, -0.25), color=color.blue)
@@ -77,8 +77,8 @@ to use our BOT to solve a real cube for you click on SOLVER
         pass
 
     def buld_3D_steps(self):
-        self.main_menu.disable()
-        self.background.disable()
+        # self.main_menu.disable()
+        # self.background.disable()
         cube = CaptureCube()
         cube.capture_cube()
 

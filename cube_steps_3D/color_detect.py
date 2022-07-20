@@ -1,5 +1,7 @@
 import numpy as np
 import cv2
+import kociemba
+
 
 class CaptureCube:
     _positions = {
@@ -78,7 +80,8 @@ class CaptureCube:
                     self._set[pos] = False
 
                 if self._cur_face == 'N':
-                    print(self._cube)
+                    x = self._cube
+                    print(translate_solve(x))
 
                 return
 
@@ -164,7 +167,7 @@ class CaptureCube:
 
     def capture_cube(self):
 
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(1)
         cv2.namedWindow('CaptureCube')
         font = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -206,7 +209,73 @@ class CaptureCube:
         cv2.destroyAllWindows()
 
 
-if __name__ == '__main__':
+# U R F D L B
 
+# U D F L B R
+def translate_solve(result_obj):
+    resu = list(result_obj.values())
+    result = [list(x.values()) for x in list(resu)]
+    string = ""
+    for i in result:
+        for x in i:
+            x = str(x)
+            if x == "r":
+                x = "F"
+            elif x == "w":
+                x = "U"
+            elif x == "b":
+                x = "R"
+            elif x == "o":
+                x = "B"
+            elif x == "g":
+                x = "L"
+            elif x == "y":
+                x = "D"
+            string += x
+    U = string[:9]
+    D = string[9:18]
+    F = string[18:27]
+    L = string[27:36]
+    B = string[36:45]
+    R = string[45:55]
+
+    print(U+R+F+D+L+B)
+    print(tranlate_3d(kociemba.solve(U+R+F+D+L+B)))
+    return kociemba.solve(U+R+F+D+L+B)
+
+
+def tranlate_3d(kociemba_str):
+    list1 = kociemba_str.split(" ")
+    cur_list = []
+    final_list = []
+    for x in list1:
+        a = x[0]
+
+        if a == "U":
+            cur_list.append("TOP")
+        elif a == "D":
+            cur_list.append("BOTTOM")
+        elif a == "L":
+            cur_list.append("LEFT")
+        elif a == "R":
+            cur_list.append("RIGHT")
+        elif a == "F":
+            cur_list.append("FACE")
+        elif a == "B":
+            cur_list.append("BACK")
+
+        if len(x) == 2:
+            b = x[1]
+            if b == "'":
+                cur_list[0] += "S"
+            else:
+                cur_list.append(cur_list[0])
+        for y in cur_list:
+            final_list.append(y)
+        cur_list = []
+    return final_list
+
+
+if __name__ == '__main__':
     cube = CaptureCube()
     cube.capture_cube()
