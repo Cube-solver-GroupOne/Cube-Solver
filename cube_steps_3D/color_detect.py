@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 
 class CaptureCube:
+    #to determine the position of each colour
     _positions = {
         (0, 0): (220, 140),
         (0, 1): (320, 140),
@@ -14,6 +15,7 @@ class CaptureCube:
         (2, 2): (420, 340)
     }
 
+     # to change the face that you are working on the screen
     _trans = {
         'F': 'L',
         'L': 'B',
@@ -22,7 +24,7 @@ class CaptureCube:
         'U': 'D',
         'D': 'N'
     }
-
+    #define colour
     _colors = ['w', 'y', 'r', 'g', 'o', 'b']
 
     _cor_map = {
@@ -61,13 +63,13 @@ class CaptureCube:
         self._set_flag = False
 
     def callback(self, event, x, y, flags, param):
-
+        # Set button on screen to take pics
         if event == cv2.EVENT_RBUTTONDOWN:
             print('saved image to ' + self._filename)
             cv2.imwrite(self._filename, self._frame)
 
             return
-
+        # button to change the face that you are working on
         elif event == cv2.EVENT_LBUTTONDOWN:
             if 0 < x < 70 and 0 < y < 50:
                 self._cube[self._cur_face] = self._state.copy()
@@ -116,7 +118,7 @@ class CaptureCube:
             self._set[(i, j)] = True
 
     def sense_color(self, ind_1, ind_2):
-
+        #color dedectour
         b_samples = []
         g_samples = []
         r_samples = []
@@ -163,7 +165,7 @@ class CaptureCube:
             return 'n'
 
     def capture_cube(self):
-
+        #  to turn on the camera and  end it
         cap = cv2.VideoCapture(0)
         cv2.namedWindow('CaptureCube')
         font = cv2.FONT_HERSHEY_SIMPLEX

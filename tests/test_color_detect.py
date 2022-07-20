@@ -12,7 +12,7 @@ def test_camera_status():
 def test_camera_status_two():
     cap = cv2.VideoCapture(1)
     actual = cv2.VideoCapture.isOpened(cap)
-    expected = True
+    expected = False
     assert actual == expected
 
 def test_positions():
