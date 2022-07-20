@@ -165,7 +165,7 @@ class CaptureCube:
             return 'n'
 
     def capture_cube(self):
-        #  to turn on the camera and  end it
+        #  to turn on the camera and end it
         cap = cv2.VideoCapture(0)
         cv2.namedWindow('CaptureCube')
         font = cv2.FONT_HERSHEY_SIMPLEX
