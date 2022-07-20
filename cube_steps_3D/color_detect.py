@@ -81,7 +81,15 @@ class CaptureCube:
 
                 if self._cur_face == 'N':
                     x = self._cube
-                    print(translate_solve(x))
+                    y = translate_solve(x)
+                    restults = tranlate_3d(y)
+                    print(restults)
+                    s = '-'.join(restults)
+                    with open('solution_steps.txt', 'w') as file:
+                        file.write(s)
+                    with open('solution_steps.txt', 'a') as file:
+                        file.write("#")
+                        file.write(y)
 
                 return
 
@@ -221,16 +229,16 @@ def translate_solve(result_obj):
             x = str(x)
             if x == "r":
                 x = "F"
-            elif x == "w":
-                x = "U"
             elif x == "b":
+                x = "U"
+            elif x == "y":
                 x = "R"
+            elif x == "w":
+                x = "L"
+            elif x == "g":
+                x = "D"
             elif x == "o":
                 x = "B"
-            elif x == "g":
-                x = "L"
-            elif x == "y":
-                x = "D"
             string += x
     U = string[:9]
     D = string[9:18]
@@ -239,9 +247,9 @@ def translate_solve(result_obj):
     B = string[36:45]
     R = string[45:55]
 
-    print(U+R+F+D+L+B)
-    print(tranlate_3d(kociemba.solve(U+R+F+D+L+B)))
-    return kociemba.solve(U+R+F+D+L+B)
+    print(U + R + F + D + L + B)
+    print(tranlate_3d(kociemba.solve(U + R + F + D + L + B)))
+    return kociemba.solve(U + R + F + D + L + B)
 
 
 def tranlate_3d(kociemba_str):
@@ -274,6 +282,43 @@ def tranlate_3d(kociemba_str):
             final_list.append(y)
         cur_list = []
     return final_list
+
+
+def kosimba_mirror(result):
+    list1 = result.split(" ")
+    cur_list = []
+    final_list = []
+    for x in list1:
+        a = x[0]
+
+        if a == "U":
+            cur_list.append("U'")
+        elif a == "D":
+            cur_list.append("D'")
+        elif a == "L":
+            cur_list.append("L'")
+        elif a == "R":
+            cur_list.append("R'")
+        elif a == "F":
+            cur_list.append("F'")
+        elif a == "B":
+            cur_list.append("B'")
+
+        if len(x) == 2:
+            b = x[1]
+            if b == "'":
+                cur_list[0] = cur_list[0][0]
+            else:
+                if len(cur_list[0]) < 2 :
+                    cur_list[0] += "2"
+                else:
+                    cur_list[0] = cur_list[0][0] + "2"
+        for y in cur_list:
+            final_list.append(y)
+        cur_list = []
+    final = final_list[::-1]
+    final = " ".join(final)
+    return final
 
 
 if __name__ == '__main__':

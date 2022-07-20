@@ -1,10 +1,11 @@
 from ursina import *
+from cube_steps_3D.color_detect import translate_solve, tranlate_3d, kosimba_mirror
 
 
 class Game:
     def __init__(self):
         super().__init__()
-
+        self.clicks = 0
         Entity(model='quad', scale=60, texture='white_cube', texture_scale=(60, 60), rotation_x=90, y=-5,
                color=color.light_gray)  # plane
         Entity(model='sphere', scale=100, texture='textures/sky0', double_sided=True)  # sky
@@ -32,30 +33,51 @@ class Game:
         self.action_mode = True
         self.message = Text(origin=(0, 19), color=color.black)
         self.create_sensors()
-        self.random_state(rotations=0)  # initial state of the cube, rotations - number of side turns
+        self.random_state()  # initial state of the cube, rotations - number of side turns
         b = Button(text='Next Move', color=color.black, scale_x=.15, scale_y=0.07, text_origin=(0, 0))
         b.world_position = (-12, -8, -15)
 
         b.on_click = self.Buttonss
+
     def Buttonss(self):
-        self.rotate_side('LEFT')
+        with open('solution_steps.txt') as file:
+            text = file.read()
+        steps_to_solve = text[:(text.find("#"))]
+        steps_to_solve = steps_to_solve.split("-")
+        self.rotate_side(steps_to_solve[self.clicks])
+        self.clicks += 1
+    # def random_state(self, rotations=3):
+    #     # [self.rotate_side_without_animation(random.choice(list(self.rotation_axes))) for i in range(rotations)]
 
-    def random_state(self, rotations=3):
-        [self.rotate_side_without_animation(random.choice(list(self.rotation_axes))) for i in range(rotations)]
-
-    def my_random_state(self):
-        ss = ["BACKS"]
-        for x in ss:
-            self.rotate_side(x)
+    def random_state(self):
+        with open('solution_steps.txt') as file:
+            text = file.read()
+        reversed = kosimba_mirror(text[(text.find("#") + 1):])
+        print("hi hi")
+        print(reversed)
+        reversed = tranlate_3d(reversed)
+        print(reversed)
+        for i in reversed:
+            self.rotate_side_without_animation(i)
 
     def rotate_side_without_animation(self, side_name):
         cube_positions = self.cubes_side_positons[side_name]
         rotation_axis = self.rotation_axes[side_name]
+
+        if str(side_name[-1]) == "S":
+            dgree = "-90"
+        else:
+            dgree = "90"
+
+        if str(side_name) == "BOTTOMS" or str(side_name) == "LEFTS":
+            dgree = "90"
+        elif str(side_name) == "BOTTOM" or str(side_name) == "LEFT":
+            dgree = "-90"
         self.reparent_to_scene()
         for cube in self.CUBES:
             if cube.position in cube_positions:
                 cube.parent = self.PARENT
-                exec(f'self.PARENT.rotation_{rotation_axis} = 90')
+                exec(f'self.PARENT.rotation_{rotation_axis} = {dgree}')
 
     def create_sensors(self):
         '''detectors for each side, for detecting collisions with mouse clicks'''
@@ -67,7 +89,6 @@ class Game:
         self.RIGHT_sensor = create_sensor(name='RIGHT', pos=(0.99, 0, 0), scale=(1.01, 3.01, 3.01))
         self.TOP_sensor = create_sensor(name='TOP', pos=(0, 1, 0), scale=(3.01, 1.01, 3.01))
         self.BOTTOM_sensor = create_sensor(name='BOTTOM', pos=(0, -1, 0), scale=(3.01, 1.01, 3.01))
-
 
     def toggle_animation_trigger(self):
         '''prohibiting side rotation during rotation animation'''
@@ -82,6 +103,11 @@ class Game:
             dgree = "-90"
         else:
             dgree = "90"
+
+        if str(side_name) == "BOTTOMS" or str(side_name) == "LEFTS":
+            dgree = "90"
+        elif str(side_name) == "BOTTOM" or str(side_name) == "LEFT":
+            dgree = "-90"
 
         self.reparent_to_scene()
         for cube in self.CUBES:
@@ -108,7 +134,10 @@ class Game:
         self.SIDE_POSITIONS = self.LEFT | self.BOTTOM | self.FACE | self.BACK | self.RIGHT | self.TOP
 
 
-
 if __name__ == '__main__':
     game = Game()
-
+    # with open('../solution_steps.txt') as file:
+    #     text = file.read()
+    # steps_to_solve = text[:(text.find("#"))]
+    # steps_to_solve = steps_to_solve.split("-")
+    # print(steps_to_solve)

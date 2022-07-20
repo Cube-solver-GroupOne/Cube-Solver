@@ -81,6 +81,9 @@ to use our BOT to solve a real cube for you click on SOLVER
         # self.background.disable()
         cube = CaptureCube()
         cube.capture_cube()
+        game = Game()
+        self.main_menu.disable()
+        self.background.disable()
 
     def buld_3D_play(self):
         self.main_menu.disable()
