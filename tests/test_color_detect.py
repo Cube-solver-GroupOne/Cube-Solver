@@ -37,3 +37,36 @@ def test_colors():
     actual = cube._colors
     expected = ['w', 'y', 'r', 'g', 'o', 'b']
     assert actual == expected
+
+def test_faces_change():
+    cube = CaptureCube
+    actual = cube._trans
+    expected  = {
+        'F': 'L',
+        'L': 'B',
+        'B': 'R',
+        'R': 'U',
+        'U': 'D',
+        'D': 'N'
+    }
+    assert actual == expected
+
+def test_crossbound():
+    cube = CaptureCube
+    actual = cube._cor_map
+    expected = {
+        'w': 'y',
+        'y': 'r',
+        'r': 'g',
+        'g': 'o',
+        'o': 'b',
+        'b': 'w',
+        'n': 'w'
+    }
+    assert actual == expected
+
+def test_end_video():
+    cube = CaptureCube
+    actual = cube._filename
+    expected = 'frame.png'
+    assert actual == expected
