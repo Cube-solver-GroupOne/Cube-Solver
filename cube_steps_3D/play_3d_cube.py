@@ -129,9 +129,9 @@ class Game3D:
         self.RIGHT = {Vec3(1, y, z) for y in range(-1, 2) for z in range(-1, 2)}
         self.TOP = {Vec3(x, 1, z) for x in range(-1, 2) for z in range(-1, 2)}
         self.SIDE_POSITIONS = self.LEFT | self.BOTTOM | self.FACE | self.BACK | self.RIGHT | self.TOP
-
-    def bbbb(self):
-        main_menu = MenuMenu()
+    #
+    # def bbbb(self):
+    #     main_menu = MenuMenu()
 
 
 

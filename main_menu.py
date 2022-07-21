@@ -66,8 +66,6 @@ to use our BOT to solve a real cube for you click on SOLVER
     # Update function that check something every frame
     # You can use it similar to input with checking
     # what menu is currently enabled
-    def update(self):
-        pass
 
     def buld_3D_steps(self):
         # self.main_menu.disable()
