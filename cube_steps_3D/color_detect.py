@@ -1,5 +1,7 @@
 import numpy as np
 import cv2
+import kociemba
+
 
 class CaptureCube:
     #to determine the position of each colour
@@ -80,7 +82,16 @@ class CaptureCube:
                     self._set[pos] = False
 
                 if self._cur_face == 'N':
-                    print(self._cube)
+                    x = self._cube
+                    y = translate_solve(x)
+                    restults = tranlate_3d(y)
+                    print(restults)
+                    s = '-'.join(restults)
+                    with open('solution_steps.txt', 'w') as file:
+                        file.write(s)
+                    with open('solution_steps.txt', 'a') as file:
+                        file.write("#")
+                        file.write(y)
 
                 return
 
@@ -118,7 +129,7 @@ class CaptureCube:
             self._set[(i, j)] = True
 
     def sense_color(self, ind_1, ind_2):
-        #color dedectour
+
         b_samples = []
         g_samples = []
         r_samples = []
@@ -208,7 +219,110 @@ class CaptureCube:
         cv2.destroyAllWindows()
 
 
-if __name__ == '__main__':
+# U R F D L B
 
+# U D F L B R
+def translate_solve(result_obj):
+    resu = list(result_obj.values())
+    result = [list(x.values()) for x in list(resu)]
+    string = ""
+    for i in result:
+        for x in i:
+            x = str(x)
+            if x == "r":
+                x = "F"
+            elif x == "b":
+                x = "U"
+            elif x == "y":
+                x = "R"
+            elif x == "w":
+                x = "L"
+            elif x == "g":
+                x = "D"
+            elif x == "o":
+                x = "B"
+            string += x
+    U = string[:9]
+    D = string[9:18]
+    F = string[18:27]
+    L = string[27:36]
+    B = string[36:45]
+    R = string[45:55]
+
+    print(U + R + F + D + L + B)
+    print(tranlate_3d(kociemba.solve(U + R + F + D + L + B)))
+    return kociemba.solve(U + R + F + D + L + B)
+
+
+def tranlate_3d(kociemba_str):
+    list1 = kociemba_str.split(" ")
+    cur_list = []
+    final_list = []
+    for x in list1:
+        a = x[0]
+
+        if a == "U":
+            cur_list.append("TOP")
+        elif a == "D":
+            cur_list.append("BOTTOM")
+        elif a == "L":
+            cur_list.append("LEFT")
+        elif a == "R":
+            cur_list.append("RIGHT")
+        elif a == "F":
+            cur_list.append("FACE")
+        elif a == "B":
+            cur_list.append("BACK")
+
+        if len(x) == 2:
+            b = x[1]
+            if b == "'":
+                cur_list[0] += "S"
+            else:
+                cur_list.append(cur_list[0])
+        for y in cur_list:
+            final_list.append(y)
+        cur_list = []
+    return final_list
+
+
+def kosimba_mirror(result):
+    list1 = result.split(" ")
+    cur_list = []
+    final_list = []
+    for x in list1:
+        a = x[0]
+
+        if a == "U":
+            cur_list.append("U'")
+        elif a == "D":
+            cur_list.append("D'")
+        elif a == "L":
+            cur_list.append("L'")
+        elif a == "R":
+            cur_list.append("R'")
+        elif a == "F":
+            cur_list.append("F'")
+        elif a == "B":
+            cur_list.append("B'")
+
+        if len(x) == 2:
+            b = x[1]
+            if b == "'":
+                cur_list[0] = cur_list[0][0]
+            else:
+                if len(cur_list[0]) < 2 :
+                    cur_list[0] += "2"
+                else:
+                    cur_list[0] = cur_list[0][0] + "2"
+        for y in cur_list:
+            final_list.append(y)
+        cur_list = []
+    final = final_list[::-1]
+    final = " ".join(final)
+    return final
+
+
+if __name__ == '__main__':
     cube = CaptureCube()
     cube.capture_cube()
