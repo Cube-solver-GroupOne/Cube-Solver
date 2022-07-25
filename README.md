@@ -125,7 +125,7 @@ we will assign the tasks dependes on the strengths points and the personal intre
 
 
 the presentation will be depend on this 
-[Presentation_URL](https://docs.google.com/presentation/d/19SrTWd7f5aPKT7IT48OQtiFOENwNE1290QyY1XtwD0I/edit?usp=sharing)
+[Presentation_URL](https://docs.google.com/presentation/d/1eEhd_c88r1U6pjK3vBBW6BcjY-E0G_KEFfrzVj7PFAg/edit#slide=id.g2accd1c413_3_31)
 we will assign to make it profissional effective as we can and we will all participate in the presentation day
 
 
